@@ -69,8 +69,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## How To Use?
 - npm run dev
 - php artisan migrate
-- php artisan db:seed UserSeeder --class pas database user kosong
-- php artisan db:seed ProductSeeder --class  pas database product kosong
+- php artisan db:seed UserSeeder --class
+- php artisan db:seed ProductSeeder --class 
 - php artisan serve buat jalanin client
-- php artisan storage:link (Buat nyambungin storage biar nyambung sama frontend)
-Abis Run XAMPP jangan langsung di shutdown biar port nya gak penuh di stop dl
+- php artisan storage:link
