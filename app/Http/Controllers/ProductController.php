@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 
 class ProductController extends Controller
 {
@@ -23,13 +26,29 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        $imagePath = $request->file('image')->store('post', 'public');
+
+        // Create an instance of ImageManager
+        $manager = new ImageManager(new Driver());
+
+        // Open an image file
+        $image = $manager->read(public_path("/storage/{$imagePath}"));
+
+        // Resize the image
+        $image->cover(600, 600);
+
+        // Save the image
+        $image->save();
 
         Product::create([
             'name' => $request->name,
             'price' => $request->price,
+            'image' => $imagePath,
         ]);
-
+        
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
     }
 
